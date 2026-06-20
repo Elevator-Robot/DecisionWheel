@@ -14,7 +14,7 @@ struct SegmentShape: Shape {
                 radius: radius,
                 startAngle: .degrees(startAngle - 90),
                 endAngle: .degrees(endAngle - 90),
-                clockwise: true
+                clockwise: false
             )
             path.closeSubpath()
         }
