@@ -8,29 +8,37 @@ struct ConfettiView: View {
         let hue: Double
         let size: CGFloat
         let shapeIndex: Int
-        let offsetX: CGFloat
-        let offsetY: CGFloat
+        let xMultiplier: CGFloat
+        let yMultiplier: CGFloat
         let rotationDeg: Double
+        let delay: Double
     }
 
     private let pieces: [Piece] = {
-        (0..<60).map { i in
+        (0..<96).map { i in
             Piece(
                 id: i,
                 hue: Double(i) / 60,
-                size: CGFloat.random(in: 6...14),
-                shapeIndex: i % 3,
-                offsetX: CGFloat.random(in: -200...200),
-                offsetY: CGFloat.random(in: -400...100),
-                rotationDeg: .random(in: 0...720)
+                size: CGFloat.random(in: 5...18),
+                shapeIndex: i % 4,
+                xMultiplier: CGFloat.random(in: -0.52...0.52),
+                yMultiplier: CGFloat.random(in: -0.72...0.18),
+                rotationDeg: .random(in: 180...980),
+                delay: Double.random(in: 0...0.16)
             )
         }
     }()
 
     var body: some View {
-        ZStack {
-            ForEach(pieces) { piece in
-                ConfettiPieceView(piece: piece, trigger: trigger)
+        GeometryReader { proxy in
+            ZStack {
+                ForEach(pieces) { piece in
+                    ConfettiPieceView(
+                        piece: piece,
+                        trigger: trigger,
+                        burstSize: proxy.size
+                    )
+                }
             }
         }
         .allowsHitTesting(false)
@@ -41,18 +49,22 @@ struct ConfettiView: View {
 private struct ConfettiPieceView: View {
     let piece: ConfettiView.Piece
     let trigger: Bool
+    let burstSize: CGSize
 
     private var color: Color {
-        Color(hue: piece.hue, saturation: 0.8, brightness: 1)
+        Color(hue: piece.hue, saturation: 0.9, brightness: 1)
     }
 
     var body: some View {
         shapeView
-            .offset(x: trigger ? piece.offsetX : 0, y: trigger ? piece.offsetY : -50)
+            .scaleEffect(trigger ? 0.35 : 1.2)
+            .offset(x: trigger ? piece.xMultiplier * burstSize.width : 0,
+                    y: trigger ? piece.yMultiplier * burstSize.height : -40)
             .rotationEffect(.degrees(trigger ? piece.rotationDeg : 0))
             .opacity(trigger ? 0 : 1)
             .animation(
-                .easeOut(duration: 1.2 + Double(piece.id) * 0.02)
+                .spring(response: 0.85, dampingFraction: 0.74)
+                .delay(piece.delay)
                 .repeatCount(1, autoreverses: false),
                 value: trigger
             )
@@ -69,9 +81,19 @@ private struct ConfettiPieceView: View {
             Rectangle()
                 .fill(color)
                 .frame(width: piece.size, height: piece.size)
-        default:
+        case 2:
             RoundedRectangle(cornerRadius: 2)
                 .fill(color)
+                .frame(width: piece.size * 0.7, height: piece.size * 1.8)
+        default:
+            Capsule()
+                .fill(
+                    LinearGradient(
+                        colors: [color, .white.opacity(0.8)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
                 .frame(width: piece.size, height: piece.size)
         }
     }
