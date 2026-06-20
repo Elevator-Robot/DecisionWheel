@@ -126,7 +126,7 @@ struct WheelView: View {
     private func spin() {
         isSpinning = true
         showConfetti = false
-        withAnimation(.spring(response: 0.4, damping: 0.6)) { winner = nil }
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.6)) { winner = nil }
 
         let fullSpins = Double(Int.random(in: 5...10)) * 360
         let randomOffset = Double.random(in: 0...360)
@@ -140,7 +140,7 @@ struct WheelView: View {
             let normalized = rotation.truncatingRemainder(dividingBy: 360)
             let pointerAngle = (360 - normalized).truncatingRemainder(dividingBy: 360)
             let index = Int(pointerAngle / segmentArc) % options.count
-            withAnimation(.spring(response: 0.5, damping: 0.6)) {
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
                 winner = options[index]
             }
             showConfetti = true
