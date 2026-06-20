@@ -8,16 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		18C2EDB5419F5786DDBC11B3 /* WheelOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C50C1D2538F72181EB4D657 /* WheelOption.swift */; };
+		228F4A33A4BE149F1940B229 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156375A13B92B57E8B98B1DA /* ConfettiView.swift */; };
 		31A14A262A0D9103D41D22D4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0561923E088DA1E54A170919 /* ContentView.swift */; };
 		460FC18A14F8A13F8DE49434 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70323584A6F6D01E1737EE50 /* Assets.xcassets */; };
 		743C63DDAA7033B800947537 /* DecisionWheelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE902802BDCEBECAE364956 /* DecisionWheelApp.swift */; };
 		8BFD4AD1B849F026CC4583AC /* OptionsEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48785A4E1FA3FC88932CBB1 /* OptionsEditorView.swift */; };
+		B69F9308F0F508B3E23A70E9 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1D608F53FE1B56565D9651 /* ColorExtensions.swift */; };
 		CA283E948BB2A53E2D84B03F /* WheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A5B9F23759F4C5432C2A7A /* WheelView.swift */; };
 		D1DCD9A186049D8A9A2E530F /* SegmentShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2727F9172CDACDB563F27 /* SegmentShape.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0561923E088DA1E54A170919 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		156375A13B92B57E8B98B1DA /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
+		5B1D608F53FE1B56565D9651 /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		5C50C1D2538F72181EB4D657 /* WheelOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelOption.swift; sourceTree = "<group>"; };
 		70323584A6F6D01E1737EE50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		726D9EF78E6471FD810FF49A /* DecisionWheel.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DecisionWheel.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +53,8 @@
 			isa = PBXGroup;
 			children = (
 				70323584A6F6D01E1737EE50 /* Assets.xcassets */,
+				5B1D608F53FE1B56565D9651 /* ColorExtensions.swift */,
+				156375A13B92B57E8B98B1DA /* ConfettiView.swift */,
 				0561923E088DA1E54A170919 /* ContentView.swift */,
 				CCE902802BDCEBECAE364956 /* DecisionWheelApp.swift */,
 				7764E12CDAFDBB0F8BE148A9 /* Info.plist */,
@@ -130,6 +136,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B69F9308F0F508B3E23A70E9 /* ColorExtensions.swift in Sources */,
+				228F4A33A4BE149F1940B229 /* ConfettiView.swift in Sources */,
 				31A14A262A0D9103D41D22D4 /* ContentView.swift in Sources */,
 				743C63DDAA7033B800947537 /* DecisionWheelApp.swift in Sources */,
 				8BFD4AD1B849F026CC4583AC /* OptionsEditorView.swift in Sources */,

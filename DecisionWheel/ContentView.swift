@@ -2,41 +2,60 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var options: [WheelOption] = [
-        WheelOption(title: "Pizza", color: .red),
-        WheelOption(title: "Sushi", color: .orange),
-        WheelOption(title: "Tacos", color: .yellow),
-        WheelOption(title: "Burgers", color: .green),
+        WheelOption(title: "Pizza", color: wheelPalette[0]),
+        WheelOption(title: "Sushi", color: wheelPalette[1]),
+        WheelOption(title: "Tacos", color: wheelPalette[2]),
+        WheelOption(title: "Burgers", color: wheelPalette[3]),
     ]
     @State private var showEditor = false
 
-    private let palette: [Color] = [
-        .red, .orange, .yellow, .green, .blue, .purple, .pink, .teal
-    ]
-
     var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                Text("Decision Wheel")
-                    .font(.title.weight(.bold))
-                Spacer()
-                Button {
-                    showEditor = true
-                } label: {
-                    Image(systemName: "pencil")
-                        .font(.title3)
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color(hex: 0x0F0C29),
+                    Color(hex: 0x302B63),
+                    Color(hex: 0x24243E),
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+
+            VStack(spacing: 0) {
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Decision Wheel")
+                            .font(.system(size: 28, weight: .heavy))
+                            .foregroundColor(.white)
+                        Text("What's it gonna be?")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.white.opacity(0.5))
+                    }
+                    Spacer()
+                    Button {
+                        showEditor = true
+                    } label: {
+                        Image(systemName: "pencil.line")
+                            .font(.body.weight(.semibold))
+                            .foregroundColor(.white)
+                            .frame(width: 40, height: 40)
+                            .background(.ultraThinMaterial)
+                            .clipShape(Circle())
+                    }
                 }
-                .disabled(options.count < 2 && !showEditor)
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+
+                Spacer()
+
+                WheelView(options: options)
+
+                Spacer()
             }
-            .padding()
-
-            Spacer()
-
-            WheelView(options: options)
-
-            Spacer()
         }
         .sheet(isPresented: $showEditor) {
-            OptionsEditorView(options: $options, palette: palette)
+            OptionsEditorView(options: $options)
         }
     }
 }

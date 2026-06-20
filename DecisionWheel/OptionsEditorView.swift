@@ -2,7 +2,6 @@ import SwiftUI
 
 struct OptionsEditorView: View {
     @Binding var options: [WheelOption]
-    let palette: [Color]
     @State private var newOptionText = ""
     @Environment(\.dismiss) private var dismiss
 
@@ -10,37 +9,69 @@ struct OptionsEditorView: View {
         NavigationStack {
             List {
                 ForEach(options) { option in
-                    HStack {
-                        Circle()
+                    HStack(spacing: 14) {
+                        RoundedRectangle(cornerRadius: 6)
                             .fill(option.color)
-                            .frame(width: 20, height: 20)
+                            .frame(width: 28, height: 28)
+                            .shadow(color: option.color.opacity(0.4), radius: 4)
                         Text(option.title)
+                            .font(.system(size: 17, weight: .medium))
+                            .foregroundColor(Color(hex: 0x302B63))
                     }
+                    .padding(.vertical, 4)
                 }
                 .onDelete { options.remove(atOffsets: $0) }
+                .onMove { options.move(fromOffsets: $0, toOffset: $1) }
 
-                HStack {
-                    TextField("Add option", text: $newOptionText)
-                    Button("Add") {
-                        let trimmed = newOptionText.trimmingCharacters(in: .whitespaces)
-                        guard !trimmed.isEmpty else { return }
-                        options.append(WheelOption(
-                            title: trimmed,
-                            color: palette[options.count % palette.count]
-                        ))
-                        newOptionText = ""
+                VStack(spacing: 0) {
+                    HStack(spacing: 12) {
+                        TextField("Add an option", text: $newOptionText)
+                            .textFieldStyle(.plain)
+                            .font(.system(size: 17))
+                        Button {
+                            let trimmed = newOptionText.trimmingCharacters(in: .whitespaces)
+                            guard !trimmed.isEmpty else { return }
+                            withAnimation {
+                                options.append(WheelOption(
+                                    title: trimmed,
+                                    color: wheelPalette[options.count % wheelPalette.count]
+                                ))
+                            }
+                            newOptionText = ""
+                        } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.title2)
+                                .foregroundColor(Color(hex: 0x4ECDC4))
+                        }
+                        .disabled(newOptionText.trimmingCharacters(in: .whitespaces).isEmpty)
                     }
-                    .disabled(newOptionText.trimmingCharacters(in: .whitespaces).isEmpty)
+                    .padding(.vertical, 8)
                 }
             }
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
+            .background(
+                LinearGradient(
+                    colors: [Color(hex: 0xF8F9FF), Color(hex: 0xE8ECF8)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
             .navigationTitle("Options")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") { dismiss() }
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Done")
+                            .font(.body.weight(.semibold))
+                            .foregroundColor(Color(hex: 0x4ECDC4))
+                    }
                 }
                 ToolbarItem(placement: .topBarLeading) {
                     EditButton()
+                        .tint(Color(hex: 0x4ECDC4))
                 }
             }
         }
