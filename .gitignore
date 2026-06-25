@@ -6,3 +6,12 @@ DerivedData/
 *.dSYM.zip
 *.dSYM
 .build/
+
+# Swiftly
+.swift-version
+
+# Local Swift installation archive
+swiftly-*.tar.gz
+
+# Local tools
+SwiftFormat/
